@@ -16,4 +16,20 @@ public class Role {
     private UUID roleId;
 
     private String name;
+
+    public enum Value{
+        ADMIN(),
+        BASIC();
+
+        long roleId;
+
+        void Values(long roleId){
+            this.roleId = roleId;
+        }
+
+        public long getRoleId(){
+            return roleId;
+        }
+
+    }
 }

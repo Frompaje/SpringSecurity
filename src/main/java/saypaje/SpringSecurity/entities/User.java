@@ -1,6 +1,8 @@
 package saypaje.SpringSecurity.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import saypaje.SpringSecurity.controller.dto.LoginRequestDto;
 
 import java.util.Set;
 import java.util.UUID;
@@ -11,7 +13,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name="userId")
+    @Column(name = "userId")
     private UUID id;
 
     @Column(unique = true)
@@ -19,7 +21,11 @@ public class User {
 
     private String password;
 
-    public enum Values{
+    public boolean isLoginCorrect(LoginRequestDto body, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(body.password(), this.password);
+    }
+
+    public enum Values {
         BASIC(2L),
         ADMIN(1L);
 
@@ -41,8 +47,8 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "roles",
-            joinColumns = @JoinColumn(name="userId"),
-            inverseJoinColumns = @JoinColumn(name="roleId")
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId")
     )
 
 
