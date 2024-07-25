@@ -39,7 +39,6 @@ public class TokenController {
             throw new BadCredentialsException("User or password is invalid!");
         }
 
-
         var timeActuallity = Instant.now();
         var timeTokenExpiresIn = 300;
 
@@ -50,7 +49,7 @@ public class TokenController {
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return ResponseEntity.ok(new LoginResponseDto(jwtValue,timeTokenExpiresIn));
+        return ResponseEntity.ok(new LoginResponseDto(jwtValue, timeTokenExpiresIn));
 
     }
 
